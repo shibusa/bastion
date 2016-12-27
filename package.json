@@ -1,0 +1,24 @@
+{
+  "name": "bastion",
+  "version": "1.0.0",
+  "description": "BASH script deployment webconsole",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shibusa/bastion.git"
+  },
+  "author": "Shirfeng Chang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shibusa/bastion/issues"
+  },
+  "homepage": "https://github.com/shibusa/bastion#readme",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0"
+  }
+}

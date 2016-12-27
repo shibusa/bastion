@@ -1,0 +1,38 @@
+<html ng-app="bastion">
+  <head>
+    <title>Bastion</title>
+    <link rel="stylesheet" type="text/css" href="static/style.css"></link>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <script type="text/javascript" src="static/controller.js"></script>
+  </head>
+  <body ng-controller="bastionctrl">
+    <h1>BASTION</h1>
+    <h2>Multi-host BASH script deployment tool</h2>
+    <form name="deployitems" ng-submit="deployaction()">
+      <div id="left" class="fchild">
+        <div id="selector">
+          <h3>Deployment clusters:</h3>
+          <!-- <select ng-model="deploy.hosts" ng-options="val group by key for (key,val) in clusters" multiple>
+          </select> -->
+        </div>
+      </div>
+
+      <div id="right" class="fchild">
+        <h3>Script Input:</h3>
+
+        <textarea id="bashtext" ng-model="deploy.input"></textarea>
+<!--
+        <br>
+        <h3> -OR- </h3>
+        <br>
+
+        <input type="file" id="bashupload" ng-model="deploy.upload"> -->
+      </div>
+
+      <div>
+        <input type="submit" id="bottom" value="Deploy">
+      </div>
+      <!-- SUCCESS OUTPUT HERE -->
+    </form>
+  </body>
+</html>
