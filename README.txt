@@ -4,6 +4,7 @@ Requirements:
 Deployment Console Server -
 - Account with private SSH key to connect to end hosts
 - Node/Angular/Express installed
+- list of cluster and hosts in proper './server/config/hosts.json' format
 
 End hosts -
 - Admin account with public SSH key installed
