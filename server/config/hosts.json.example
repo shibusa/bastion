@@ -1,0 +1,20 @@
+{
+    "CLUSTERNAME1":{
+        "user":"USERNAME",
+        "port":PORTNUMBER,
+        "hosts":[
+            "HOST IP1",
+	          "HOST IP2",
+            "HOST IP3"
+        ]
+    },
+    "CLUSTERNAME2":{
+        "user":"USERNAME",
+        "port":PORTNUMBER,
+        "hosts":[
+            "HOST IP1",
+	          "HOST IP2",
+            "HOST IP3"
+        ]
+    }
+}
