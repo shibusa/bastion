@@ -9,6 +9,6 @@ app.use(express.static(path.join(__dirname, 'client')));
 
 require(path.join(__dirname, 'server/routes.js'))(app)
 
-app.listen(port,function(){
+app.listen(port, function(){
     console.log("Server running on port",port)
 });
