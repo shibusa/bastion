@@ -1,7 +1,7 @@
 * {
   margin:0px;
   padding:0px;
-  font-family:sans-serif;;
+  font-family:sans-serif;
   font-size:18px;
   text-align:center;
 }
@@ -12,60 +12,75 @@ h1{
 }
 
 h2{
-  padding-bottom:20px;
   font-size:24px;
   font-weight:normal;
 }
 
 form{
-  height:50%;
+  height:75%;
   width:100%;
 }
 
-select{
-  height:80%;
-  width:50%;
+form h3{
+  padding:10px 0px;
 }
 
-optgroup{
-  text-align:left;
-}
-
-option{
-  text-align:left;
-}
-
-.fchild{
+.midform{
   height:90%;
   float:left;
-  display: table-cell;
-  overflow: scroll;
+  overflow:scroll;
 }
 
 #left{
   width:34%;
 }
 
+#left select{
+  height:80%;
+  width:50%;
+}
+
+option, optgroup{
+  text-align:left;
+}
+
 #right{
   width:66%;
 }
 
-#bashtext{
+#right textarea {
   font-size:14px;
-  font-family: monospace;
+  font-family:monospace;
   text-align:left;
-  height:34%;
+  height:50%;
   width:75%;
 }
 
-#bashupload{
+#right input[type="file"]{
   width:25%;
 }
 
-#bottom{
-  background:none;
+#fullcenter{
+  width:100%;
+}
+
+#fullcenter p, pre{
+  margin-left:10%;
+  text-align: left;
+}
+
+#fullcenter pre{
+  font-size:14px;
+  font-family:monospace;
+}
+
+.bottom{
+  clear:both;
+}
+
+.bottom input{
+  background-color:white;
   border:1px solid black;
   border-radius:0px;
-  clear:both;
   padding:10px 25px;
 }

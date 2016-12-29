@@ -1,0 +1,20 @@
+<form name="deployitems" ng-submit="deploy()">
+  <div id="left" class="midform">
+    <h3>Deployment Clusters:</h3>
+    <select ng-model="deploy.hosts" ng-options="item.name group by item.type for item in clusters" multiple>
+    </select>
+    <br>
+    Sudo Required <input type="checkbox" value="hi" ng-model"deploy.sudo">
+  </div>
+
+  <div id="right" class="midform">
+    <h3>Script Input:</h3>
+    <textarea ng-model="deploy.input"></textarea>
+    <!-- <h3>Upload to Input: </h3>
+    <input type="file" ng-model="deploy.upload"> -->
+  </div>
+
+  <div class="bottom">
+    <input type="submit" value="Deploy">
+  </div>
+</form>

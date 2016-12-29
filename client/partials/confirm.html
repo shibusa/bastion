@@ -1,0 +1,13 @@
+<form name ="confirmitems">
+  <div id="fullcenter" class="midform">
+    <h3>Deployment list:</h3>
+    <p ng-repeat="(location, servers) in reqdata"><b>{{location}}</b>: {{servers.hosts.join(', ')}}</p>
+    <h3>Script input</h3>
+    <pre>{{deploy.input}}</pre>
+
+  </div>
+  <div class="bottom">
+    <input type="submit" value="Deny" ng-click="confirm(false)">
+    <input type="submit" value="Confirm" ng-click="confirm(true)">
+  </div>
+</form>
