@@ -1,7 +1,9 @@
-<form name ="confirmitems">
+<form name ="confirmitems" ng-controller="bastionctrl">
   <div id="fullcenter" class="midform">
+    Clusters {{clusters}}<br>
+    Save {{save}}
     <h3>Deployment list:</h3>
-    <p ng-repeat="(location, servers) in reqdata"><b>{{location}}</b>: {{servers.hosts.join(', ')}}</p>
+    <p ng-repeat="(location, servers) in save"><b>{{location}}</b>: {{servers.hosts.join(', ')}}</p>
     <h3>Script input</h3>
     <pre>{{deploy.input}}</pre>
 

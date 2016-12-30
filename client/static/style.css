@@ -25,6 +25,10 @@ form h3{
   padding:10px 0px;
 }
 
+form p{
+  color:red;
+}
+
 .midform{
   height:90%;
   float:left;

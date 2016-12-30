@@ -1,20 +1,22 @@
-<form name="deployitems" ng-submit="deploy()">
-  <div id="left" class="midform">
+<form novalidate name="deployitems" ng-submit="deploy()" ng-controller="bastionctrl">
+  <div id="left" class="midform" ng-messages="deployitems.hosts.$error">
     <h3>Deployment Clusters:</h3>
-    <select ng-model="deploy.hosts" ng-options="item.name group by item.type for item in clusters" multiple>
+    <select ng-model="formdata.hosts" ng-options="item.name group by item.type for item in clusters" multiple name="hosts" required>
     </select>
     <br>
-    Sudo Required <input type="checkbox" value="hi" ng-model"deploy.sudo">
+    Sudo Required <input type="checkbox" ng-model="formdata.sudo">
+    <p ng-message="required">No hosts selected.</p>
   </div>
 
-  <div id="right" class="midform">
+  <div id="right" class="midform" ng-messages="deployitems.input.$error">
     <h3>Script Input:</h3>
-    <textarea ng-model="deploy.input"></textarea>
+    <textarea ng-model="formdata.input" name="input" required></textarea>
     <!-- <h3>Upload to Input: </h3>
-    <input type="file" ng-model="deploy.upload"> -->
+    <input type="file" ng-model="formdata.upload"> -->
+    <p ng-message="required">No script staged.</p>
   </div>
 
   <div class="bottom">
-    <input type="submit" value="Deploy">
+    <input ng-disabled="deployitems.$invalid" type="submit" value="Deploy">
   </div>
 </form>

@@ -1,29 +1,34 @@
 app.controller('bastionctrl', function($http, $scope, $location){
 
   $scope.clusters = {}
-  $scope.reqdata = {}
+  $scope.save = {}
+
   $http.get('/hosts').then(function(response){
     $scope.clusters = response.data
   })
 
   $scope.deploy = function(){
-    // Simplify data
-    $scope.deploy.hosts.forEach(function(item){
-      $scope.reqdata[item.type] = {"hosts":[]}
+    console.log($scope.formdata)
+    var reqdata = {}
+    // Reformatting data to be similar to orignal JSON dictionary form
+    $scope.formdata.hosts.forEach(function(item){
+      reqdata[item.type] = {"hosts":[]}
     })
 
-    $scope.deploy.hosts.forEach(function(item){
-        if($scope.reqdata[item.type].hosts.indexOf(item.value.toString()) == -1){
-          $scope.reqdata[item.type].hosts = $scope.reqdata[item.type].hosts.concat(item.value)
+    $scope.formdata.hosts.forEach(function(item){
+        if(reqdata[item.type].hosts.indexOf(item.value.toString()) == -1){
+          reqdata[item.type].hosts = reqdata[item.type].hosts.concat(item.value)
         }
     })
+
+    // for loop reconstruction
     $location.url("/confirm")
   }
 
   $scope.confirm = function(bool){
-    if(bool){
-      $http.post('/deploy', {"data":$scope.reqdata, "input":$scope.deploy.input})
-    }
+    // if(bool){
+    //   $http.post('/deploy', {"data":reqdata, "input":$scope.formdata.input})
+    // }
     $location.url("/")
   }
 })
