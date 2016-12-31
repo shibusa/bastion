@@ -75,11 +75,9 @@ module.exports = function(app){
         const ssh = spawn('ssh', sshargs)
 
         // Read script file and pass it as stdin
-        console.log(logdir + "script")
         ssh.stdin.write(fs.readFileSync(logdir + "script", 'utf8'))
         ssh.stdin.end()
 
-        console.log("file pushed to stdin")
         ssh.stderr.on('data', (stderrdata) => {
           fs.appendFileSync(logdir + `${host}.log`, `${stderrdata}`)
         })
