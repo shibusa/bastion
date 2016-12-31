@@ -1,8 +1,8 @@
 // Asynchronous child_process and file system dependencies
-const spawn = require('child_process').spawn, fs = require("fs");
+const spawn = require('child_process').spawn, fs = require("fs")
 
 // Parsing hosts.json file in config
-const clusterlist = JSON.parse(fs.readFileSync(__dirname + "/config/hosts.json"));
+const clusterlist = JSON.parse(fs.readFileSync(__dirname + "/config/hosts.json"))
 const clusterlistkeys = Object.keys(clusterlist)
 
 // Create JSON in array for ng-Options usable format
@@ -33,51 +33,60 @@ module.exports = function(app){
   })
 
   app.post('/deploy', function(req,res){
-    // Enter sudo mode
-    if (req.body.sudo){
-      req.body.input = "sudo -s \n" + req.body.input
-    }
+    // Current date time formatting
+    const currdatetime = new Date();
+    const thedate = [
+      ((currdatetime.getMonth() + 1)<10?'0':'') + (currdatetime.getMonth() + 1),
+      (currdatetime.getDate()<10?'0':'') + currdatetime.getDate(),
+      currdatetime.getFullYear()
+    ].join('-')
+    const thetime = [
+      (currdatetime.getHours()<10?'0':'') + currdatetime.getHours(),
+      (currdatetime.getMinutes()<10?'0':'') + currdatetime.getMinutes(),
+      (currdatetime.getSeconds()<10?'0':'') + currdatetime.getSeconds(),
+      (currdatetime.getMilliseconds()<10?'0':'') + currdatetime.getMilliseconds()
+    ].join('-')
+    const timeformat = thedate + "_" + thetime
 
-    var reqdata = req.body.locations
+    // Log directory
+    const logdir = __dirname + `/logs/${timeformat}/`
 
-    // Each location
-    Object.keys(reqdata).forEach(function(location) {
-      // default port if port not listed in hosts.json
+    // Create folder to house script and logs
+    fs.mkdirSync(logdir)
+    fs.writeFileSync(logdir + "script", req.body.input)
+
+    var locations = req.body.locations
+
+    Object.keys(locations).forEach(function(location){
       if (!("port" in clusterlist[location])) {
         clusterlist[location].port = 22
       }
 
-      reqdata[location].hosts.forEach(function(host){
-        // Current time
-        var currdatetime = new Date();
+      locations[location].hosts.forEach(function(host){
+        // SSH logic
+        let sshargs
+        if(req.body.sudo){
+          sshargs = ['-p', clusterlist[location].port, `${clusterlist[location].user}@${host}`, 'sudo bash -s']
+        }
+        else{
+          sshargs = ['-p', clusterlist[location].port, `${clusterlist[location].user}@${host}`, 'bash -s']
+        }
 
-        // Logfile output
-        var logfile = __dirname + `/logs/${host.replace(/\./g,'-')}___${currdatetime.toISOString()}.log`
+        const ssh = spawn('ssh', sshargs)
 
-        // SSH format append input to logfile
-        const ssh = spawn('ssh', ['-p', clusterlist[location].port, `${clusterlist[location].user}@${host}`, req.body.input]);
-        fs.appendFile(logfile, `####Issued Commands\n${req.body.input}\n\n####Output Log\n`, (err) => {
-          if (err) throw err;
-        });
+        // Read script file and pass it as stdin
+        console.log(logdir + "script")
+        ssh.stdin.write(fs.readFileSync(logdir + "script", 'utf8'))
+        ssh.stdin.end()
 
-        // Append outputs to logfiles
-        ssh.stdout.on('data', (data) => {
-          fs.appendFile(logfile, `${data}`, (err) => {
-            if (err) throw err;
-          });
-        });
+        console.log("file pushed to stdin")
+        ssh.stderr.on('data', (stderrdata) => {
+          fs.appendFileSync(logdir + `${host}.log`, `${stderrdata}`)
+        })
 
-        ssh.stderr.on('data', (data) => {
-          fs.appendFile(logfile, `${data}`, (err) => {
-            if (err) throw err;
-          });
-        });
-
-        // ssh.on('close', (code) => {
-        //   fs.appendFile(logfile, `Exit code: ${code}`, (err) => {
-        //     if (err) throw err;
-        //   });
-        // });
+        ssh.stdout.on('data', (stdoutdata) => {
+          fs.appendFileSync(logdir + `${host}.log`, `${stdoutdata}`)
+        })
       })
     })
   })
