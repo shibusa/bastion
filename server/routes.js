@@ -2,28 +2,37 @@
 const spawn = require('child_process').spawn, fs = require("fs")
 
 // Parsing hosts.json file in config
-const clusterlist = JSON.parse(fs.readFileSync(__dirname + "/config/hosts.json"))
-const clusterlistkeys = Object.keys(clusterlist)
+fs.readFile(__dirname + "/config/hosts.json", 'utf8', function(err,data){
+  if(err){
+    const consolered = "\x1b[31m"
+    const consolereset = "\x1b[0m"
+    console.log(consolered + "Missing 'hosts.json' file from ./bastion/server/config" + consolereset)
+  }
+  else{
+    const clusterlist = JSON.parse(data)
+    const clusterlistkeys = Object.keys(clusterlist)
 
-// Create JSON in array for ng-Options usable format
-var iponly = []
-clusterlistkeys.forEach(function(location) {
+    // Create JSON in array for ng-Options usable format
+    var iponly = []
+    clusterlistkeys.forEach(function(location) {
 
-  // All hosts
-  var all = {}
-  all.type = location
-  all.name = `All Nodes in  ${location}`
-  all.value = clusterlist[location].hosts
-  iponly.push(all)
+      // All hosts
+      var all = {}
+      all.type = location
+      all.name = `All Nodes in  ${location}`
+      all.value = clusterlist[location].hosts
+      iponly.push(all)
 
-  // Each host
-  clusterlist[location].hosts.forEach(function(ip) {
-    var each = {}
-    each.type = location
-    each.name = ip
-    each.value = [ip]
-    iponly.push(each)
-  })
+      // Each host
+      clusterlist[location].hosts.forEach(function(ip) {
+        var each = {}
+        each.type = location
+        each.name = ip
+        each.value = [ip]
+        iponly.push(each)
+      })
+    })
+  }
 })
 
 module.exports = function(app){
