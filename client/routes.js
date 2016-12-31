@@ -1,4 +1,4 @@
-var app = angular.module('bastion', ['ngRoute', 'ngMessages']);
+var app = angular.module('bastion', ['ngRoute', 'ngMessages', 'ngCookies']);
 
 app.config(function($routeProvider){
   $routeProvider

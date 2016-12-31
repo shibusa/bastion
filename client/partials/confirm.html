@@ -1,15 +1,13 @@
-<form name ="confirmitems" ng-controller="bastionctrl">
+<form name ="deployitems" ng-controller="bastionctrl">
   <div id="fullcenter" class="midform">
-    Clusters {{clusters}}<br>
-    Save {{save}}
-    <h3>Deployment list:</h3>
-    <p ng-repeat="(location, servers) in save"><b>{{location}}</b>: {{servers.hosts.join(', ')}}</p>
-    <h3>Script input</h3>
-    <pre>{{deploy.input}}</pre>
-
+    <h3>Deployment List:</h3>
+    <p ng-repeat="(location, servers) in confirmdata.locations"><b>{{location}}</b>: {{servers.hosts.join(', ')}}</p>
+    <h3>Script Input <span ng-if="confirmdata.sudo">(Running using sudo)</span></h3>
+    <pre>{{confirmdata.input}}</pre>
   </div>
+
   <div class="bottom">
     <input type="submit" value="Deny" ng-click="confirm(false)">
     <input type="submit" value="Confirm" ng-click="confirm(true)">
-  </div>
+  <div>
 </form>

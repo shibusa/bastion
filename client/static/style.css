@@ -16,16 +16,16 @@ h2{
   font-weight:normal;
 }
 
+h3{
+  padding:10px 0px;
+}
+
 form{
   height:75%;
   width:100%;
 }
 
-form h3{
-  padding:10px 0px;
-}
-
-form p{
+form span{
   color:red;
 }
 

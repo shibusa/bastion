@@ -5,7 +5,7 @@
     </select>
     <br>
     Sudo Required <input type="checkbox" ng-model="formdata.sudo">
-    <p ng-message="required">No hosts selected.</p>
+    <p ng-message="required"><span>No hosts selected.</span></p>
   </div>
 
   <div id="right" class="midform" ng-messages="deployitems.input.$error">
@@ -13,7 +13,7 @@
     <textarea ng-model="formdata.input" name="input" required></textarea>
     <!-- <h3>Upload to Input: </h3>
     <input type="file" ng-model="formdata.upload"> -->
-    <p ng-message="required">No script staged.</p>
+    <p ng-message="required"><span>No script staged.</span></p>
   </div>
 
   <div class="bottom">

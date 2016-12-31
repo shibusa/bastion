@@ -33,48 +33,52 @@ module.exports = function(app){
   })
 
   app.post('/deploy', function(req,res){
-    var reqdata = req.body.data
+    // Enter sudo mode
+    if (req.body.sudo){
+      req.body.input = "sudo -s \n" + req.body.input
+    }
+
+    var reqdata = req.body.locations
 
     // Each location
     Object.keys(reqdata).forEach(function(location) {
+      // default port if port not listed in hosts.json
+      if (!("port" in clusterlist[location])) {
+        clusterlist[location].port = 22
+      }
 
-        // default port if port not listed in hosts.json
-        if (!clusterlist[location].port) {
-          clusterlist[location].port = 22
-        }
+      reqdata[location].hosts.forEach(function(host){
+        // Current time
+        var currdatetime = new Date();
 
-        reqdata[location].hosts.forEach(function(host){
-          // Current time
-          var currdatetime = new Date();
+        // Logfile output
+        var logfile = __dirname + `/logs/${host.replace(/\./g,'-')}___${currdatetime.toISOString()}.log`
 
-          // Logfile output
-          var logfile = __dirname + `/logs/${host.replace(/\./g,'-')}___${currdatetime.toISOString()}.log`
+        // SSH format append input to logfile
+        const ssh = spawn('ssh', ['-p', clusterlist[location].port, `${clusterlist[location].user}@${host}`, req.body.input]);
+        fs.appendFile(logfile, `####Issued Commands\n${req.body.input}\n\n####Output Log\n`, (err) => {
+          if (err) throw err;
+        });
 
-          // SSH format append input to logfile
-          const ssh = spawn('ssh', ['-p', clusterlist[location].port, `${clusterlist[location].user}@${host}`, req.body.input]);
-          fs.appendFile(logfile, `####Issued Commands\n${req.body.input}\n\n####Output Log\n`, (err) => {
+        // Append outputs to logfiles
+        ssh.stdout.on('data', (data) => {
+          fs.appendFile(logfile, `${data}`, (err) => {
             if (err) throw err;
           });
+        });
 
-          // Append outputs to logfiles
-          ssh.stdout.on('data', (data) => {
-            fs.appendFile(logfile, `${data}`, (err) => {
-              if (err) throw err;
-            });
+        ssh.stderr.on('data', (data) => {
+          fs.appendFile(logfile, `${data}`, (err) => {
+            if (err) throw err;
           });
+        });
 
-          ssh.stderr.on('data', (data) => {
-            fs.appendFile(logfile, `${data}`, (err) => {
-              if (err) throw err;
-            });
-          });
-
-          // ssh.on('close', (code) => {
-          //   fs.appendFile(logfile, `Exit code: ${code}`, (err) => {
-          //     if (err) throw err;
-          //   });
-          // });
-        })
+        // ssh.on('close', (code) => {
+        //   fs.appendFile(logfile, `Exit code: ${code}`, (err) => {
+        //     if (err) throw err;
+        //   });
+        // });
+      })
     })
   })
 }

@@ -18,6 +18,7 @@
   "homepage": "https://github.com/shibusa/bastion#readme",
   "dependencies": {
     "angular": "^1.6.1",
+    "angular-cookies": "^1.6.1",
     "angular-messages": "^1.6.1",
     "angular-route": "^1.6.1",
     "body-parser": "^1.15.2",
