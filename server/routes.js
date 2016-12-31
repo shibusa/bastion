@@ -1,5 +1,7 @@
 // Asynchronous child_process and file system dependencies
 const spawn = require('child_process').spawn, fs = require("fs")
+var clusterlist, clusterlistkeys
+var iponly = []
 
 // Parsing hosts.json file in config
 fs.readFile(__dirname + "/config/hosts.json", 'utf8', function(err,data){
@@ -9,11 +11,10 @@ fs.readFile(__dirname + "/config/hosts.json", 'utf8', function(err,data){
     console.log(consolered + "Missing 'hosts.json' file from ./bastion/server/config" + consolereset)
   }
   else{
-    const clusterlist = JSON.parse(data)
-    const clusterlistkeys = Object.keys(clusterlist)
+    clusterlist = JSON.parse(data)
+    clusterlistkeys = Object.keys(clusterlist)
 
     // Create JSON in array for ng-Options usable format
-    var iponly = []
     clusterlistkeys.forEach(function(location) {
 
       // All hosts
