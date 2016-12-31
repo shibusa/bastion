@@ -2,9 +2,9 @@ Proof of Concept BASH script deployment Web Console
 
 Requirements:
 Deployment Console Server -
-- Account with private SSH key to connect to end hosts
-- Node/Angular/Express installed
-- list of cluster and hosts in proper './server/config/hosts.json' format
+- UNIX system with private SSH key to connect to end hosts
+- Node installed
+- list of cluster and hosts in './bastion/server/config/hosts.json'
 
 End hosts -
 - Admin account with public SSH key installed

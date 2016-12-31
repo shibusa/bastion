@@ -1,7 +1,6 @@
 // Asynchronous child_process and file system dependencies
 const spawn = require('child_process').spawn, fs = require("fs")
-var clusterlist, clusterlistkeys
-var iponly = []
+let clusterlist, clusterlistkeys, iponly = []
 
 // Parsing hosts.json file in config
 fs.readFile(__dirname + "/config/hosts.json", 'utf8', function(err,data){
