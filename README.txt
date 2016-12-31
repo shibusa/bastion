@@ -18,5 +18,8 @@ Installation:
 
 Usage:
 1. Change to same directory housing 'server.js'
-2. Issue 'node server.js'
+2. Grant executeable permissions to 'server.js'
+chmod +x server.js
+3. Start the app
+./server.js
 3. Visit 'http://{server ip}:8000/'
