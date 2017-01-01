@@ -1,4 +1,4 @@
-Proof of Concept BASH script deployment Web Console
+Proof of Concept Multi UNIX host script deployment Web Console
 
 Requirements:
 Deployment Console Server -
