@@ -35,6 +35,11 @@ fs.readFile(__dirname + "/config/hosts.json", 'utf8', function(err,data){
   }
 })
 
+// Create logs folder if it doesn't exist
+if (!fs.existsSync(__dirname + "/logs")){
+  fs.mkdirSync(__dirname + "/logs")
+}
+
 module.exports = function(app){
 
   app.get('/hosts', function(req,res){
