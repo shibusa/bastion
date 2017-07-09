@@ -1,5 +1,12 @@
 # Proof of Concept Multi UNIX host script deployment Web Console
 
+[![Alt text](https://img.youtube.com/vi/kEK51jJxE8A/maxresdefault.jpg)](https://www.youtube.com/embed/kEK51jJxE8A?rel=0;autohide=1;showinfo=0;color=white;cc_load_policy=1)
+*(click image for demo)*
+
+Multi UNIX host script deployment web console written in Javascript. Bastion uses the Node.js runtime environment, Express framework for the backend, Angular framework for the front end, and ssh-key authentication over OpenSSH for code deployment.
+
+Bastion is built to cut down deploy time and data retrieval across 100+ host infrastructures. Scripts of any language is useable in conjunction with Bastion as long as the end hosts have the necessary interpreter installed. Currently only supports UNIX based distributions.
+
 ## Requirements
 ### Deployment Console Server
 - UNIX system with private SSH key to connect to end hosts
