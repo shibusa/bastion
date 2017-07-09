@@ -1,4 +1,4 @@
-# Proof of Concept Multi UNIX host script deployment Web Console
+# Bastion - Proof of Concept Multi UNIX Host Deployment Web Console
 
 [![Alt text](https://img.youtube.com/vi/kEK51jJxE8A/maxresdefault.jpg)](https://www.youtube.com/embed/kEK51jJxE8A?rel=0;autohide=1;showinfo=0;color=white;cc_load_policy=1)
 *(click image for demo)*
